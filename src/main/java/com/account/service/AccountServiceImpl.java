@@ -5,6 +5,9 @@ import com.account.payload.AccountDto;
 import com.account.repository.AccountRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class AccountServiceImpl implements AccountService{
 
@@ -44,5 +47,11 @@ public class AccountServiceImpl implements AccountService{
     }
     public void deleteAccountById(long id){
         accountRepository.deleteById(id);
+    }
+
+    public List<AccountDto>listOfAcHolders(){
+        List<Account> lists = accountRepository.findAll();
+        List<AccountDto> collect = lists.stream().map(e -> mapToDto(e)).collect(Collectors.toList());
+        return collect;
     }
 }
